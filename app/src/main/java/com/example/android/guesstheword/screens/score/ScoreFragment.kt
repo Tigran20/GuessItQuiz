@@ -15,8 +15,8 @@ class ScoreFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding: ScoreFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.score_fragment, container, false)
-
         val scoreFragmentArgs by navArgs<ScoreFragmentArgs>()
+
         binding.scoreText.text = scoreFragmentArgs.score.toString()
         binding.playAgainButton.setOnClickListener { onPlayAgain() }
 

@@ -2,7 +2,6 @@ package com.example.android.guesstheword.screens.game
 
 import android.os.Bundle
 import android.text.format.DateUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +22,16 @@ class GameFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.game_fragment, container, false)
         gameViewModel = ViewModelProviders.of(this).get(GameViewModel::class.java)
 
+        initGameButton()
+        updateScoreText()
+        updateWordText()
+        updateCurrentTime()
+        gameFinish()
+
+        return binding.root
+    }
+
+    private fun initGameButton() {
         binding.correctButton.setOnClickListener {
             gameViewModel.onCorrect()
             updateWordText()
@@ -32,29 +41,31 @@ class GameFragment : Fragment() {
             gameViewModel.onSkip()
             updateWordText()
         }
+    }
 
-        gameViewModel.score.observe(this, Observer { newScore ->
-            binding.scoreText.text = newScore.toString()
-        })
-
+    private fun updateCurrentTime() {
         gameViewModel.currentTime.observe(this, Observer { newTime ->
             binding.timerText.text = DateUtils.formatElapsedTime(newTime)
         })
+    }
 
+    private fun updateScoreText() {
+        gameViewModel.score.observe(this, Observer { newScore ->
+            binding.scoreText.text = newScore.toString()
+        })
+    }
+
+    private fun updateWordText() {
+        binding.wordText.text = gameViewModel.word.value
+    }
+
+    private fun gameFinish() {
         gameViewModel.eventGameFinish.observe(this, Observer { hasFinished ->
             if (hasFinished) {
                 gameFinished()
                 gameViewModel.onGameFinishComplete()
             }
         })
-
-        updateWordText()
-
-        return binding.root
-    }
-
-    private fun updateWordText() {
-        binding.wordText.text = gameViewModel.word.value
     }
 
     private fun gameFinished() {
