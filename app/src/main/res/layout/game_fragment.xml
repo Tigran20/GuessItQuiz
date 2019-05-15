@@ -39,6 +39,7 @@
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true"
             android:fontFamily="sans-serif"
+            android:text="@{@string/quote_format(gameViewModel.word)}"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textColor="@color/black_text_color"
             android:textSize="34sp"
@@ -52,6 +53,7 @@
             tools:text="&quot;Tuna&quot;" />
 
         <TextView
+            android:text="@{gameViewModel.currentTimeString}"
             android:id="@+id/timer_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -80,7 +82,7 @@
             app:layout_constraintBottom_toTopOf="@+id/guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:text="Score: 2" />
+            tools:text="@{@string/score_format(gameViewModel.score)}" />
 
         <Button
             android:id="@+id/skip_button"
